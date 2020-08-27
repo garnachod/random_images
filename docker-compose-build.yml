@@ -1,0 +1,7 @@
+version: '2'
+services:
+  app:
+    image: golang:1.14
+    volumes:
+      - ./:/src
+    working_dir: /src
