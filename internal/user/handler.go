@@ -1,9 +1,9 @@
 package user
 
 import (
-    "encoding/json"
-    "fmt"
+    "context"
     "github.com/garnachod/random_images/internal"
+    "github.com/garnachod/random_images/internal/utils"
     "log"
     "net/http"
 )
@@ -38,17 +38,6 @@ func (h handler) Login(w http.ResponseWriter, r *http.Request) {
         JWT string `json:"jwt"`
     } {login}
 
-    response, err := json.Marshal(loginResponse)
-    if err != nil {
-        errString := fmt.Sprintf("%s|%s", internal.JSONSerialization.Error(), err.Error())
-        log.Printf("WARNING|user|login|serialization|%s", errString)
-        http.Error(w, errString, http.StatusInternalServerError)
-        return
-    }
-
-    w.Header().Set("Content-Type", "application/json")
-    w.WriteHeader(http.StatusOK)
-    if _, err = w.Write(response); err != nil{
-        log.Printf("ERROR|user|login|writeResponse|%s", err.Error())
-    }
+    ctx := context.WithValue(context.Background(), utils.ContextKeyCaller, "user|login")
+    utils.SerializeJSON(ctx, w, loginResponse)
 }

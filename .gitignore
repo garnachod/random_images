@@ -1,2 +1,4 @@
 docker/real.env
 .idea/
+
+bin/random

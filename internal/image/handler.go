@@ -1,10 +1,10 @@
 package image
 
 import (
-    "encoding/json"
+    "context"
     "fmt"
     "github.com/garnachod/random_images/internal"
-    "log"
+    "github.com/garnachod/random_images/internal/utils"
     "net/http"
     "strconv"
 )
@@ -48,17 +48,6 @@ func (h handler) GetImage(w http.ResponseWriter, r *http.Request) {
         URL string `json:"url"`
     } {url}
 
-    response, err := json.Marshal(imageResponse)
-    if err != nil {
-        errString := fmt.Sprintf("%s|%s", internal.JSONSerialization.Error(), err.Error())
-        log.Printf("WARNING|image|get|serialization|%s", errString)
-        http.Error(w, errString, http.StatusInternalServerError)
-        return
-    }
-
-    w.Header().Set("Content-Type", "application/json")
-    w.WriteHeader(http.StatusOK)
-    if _, err = w.Write(response); err != nil{
-        log.Printf("ERROR|image|get|writeResponse|%s", err.Error())
-    }
+    ctx := context.WithValue(context.Background(), utils.ContextKeyCaller, "image|getImage")
+    utils.SerializeJSON(ctx, w, imageResponse)
 }
