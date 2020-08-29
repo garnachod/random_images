@@ -19,3 +19,9 @@ curl "localhost:3000/v0/images/random?x=800&y=600" -H "Authorization: Bearer <jw
 ok      github.com/garnachod/random_images/internal/user        0.007s  coverage: 95.2% of statements
 ok      github.com/garnachod/random_images/internal/image       0.009s  coverage: 100.0% of statements
 ```
+
+#### autogen api documentation
+```
+make docker-docu
+```
+[link](https://github.com/garnachod/random_images/tree/master/autogen/api.md)

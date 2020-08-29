@@ -22,6 +22,10 @@ func NewUserHandler(service Service) Handler {
     }
 }
 
+// Login if the request uses HTTP Basic Authentication.
+// See RFC 2617, Section 2.
+// and the user is in the provider
+// response {"jwt": "<jwt_token>"}
 func (h handler) Login(w http.ResponseWriter, r *http.Request) {
     username, password, ok := r.BasicAuth()
     if username == "" || password == "" || !ok {

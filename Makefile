@@ -15,10 +15,19 @@ build-mocks:
 test:
 	go test -cover ./internal/user ./internal/image
 
+docu:
+	go run ./cmd/random
+
 docker-test:
 	@echo "Using docker for $*"
 	@docker-compose -f docker-compose-build.yml build
 	@docker-compose -f docker-compose-build.yml run --rm app make test
+	@docker-compose -f docker-compose-build.yml down
+
+docker-docu:
+	@echo "Using docker for $*"
+	@docker-compose -f docker-compose-build.yml build
+	@docker-compose -f docker-compose-build.yml run --rm app make docu
 	@docker-compose -f docker-compose-build.yml down
 
 docker-run:

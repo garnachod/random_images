@@ -23,6 +23,9 @@ func NewImageHandler(service Service) Handler {
     }
 }
 
+// GetImage returns a json with a url of a image
+// needs 2 http query params x = with of the image and y = height of the image
+// response {"url": "<image_url>"}
 func (h handler) GetImage(w http.ResponseWriter, r *http.Request) {
     xStr := r.FormValue("x")
     yStr := r.FormValue("y")
